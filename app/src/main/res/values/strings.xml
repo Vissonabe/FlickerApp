@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FlickerApp</string>
+    <string name="search_loading_text">search for images from flickr</string>
+    <string name="hint">ex: car, bike</string>
+</resources>
