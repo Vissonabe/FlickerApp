@@ -1,13 +1,17 @@
-package com.example.flickerapp
+package com.example.flickerapp.ui
 
+import android.content.Context
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.example.flickerapp.R
 import com.example.flickerapp.model.PhotoResult
+import com.example.flickerapp.network.NetworkManager
 import com.example.flickerapp.network.Result
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
-class MainViewModel(val networkManager : NetworkManager) : ViewModel() {
+class MainViewModel @ViewModelInject constructor(val networkManager : NetworkManager) : ViewModel() {
 
     var currentQuery = ""
     var currentPage = 1
@@ -22,14 +26,13 @@ class MainViewModel(val networkManager : NetworkManager) : ViewModel() {
 
     fun searchImage()  = liveData<Result<PhotoResult>>(Dispatchers.IO) {
         currentPage++
-        delay(2000)
         makeApiRequest(this, true)
     }
 
     private suspend fun makeApiRequest(liveDataScope: LiveDataScope<Result<PhotoResult>>, isPagination : Boolean) {
         setLoadingValue(true)
         if(!isPagination) {
-            liveDataScope.emit(Result.Loading("Loading"))
+            liveDataScope.emit(Result.Loading("Loading ..."))
         }
         try {
             if(!isPagination) {

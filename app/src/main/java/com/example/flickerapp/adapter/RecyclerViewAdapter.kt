@@ -35,7 +35,6 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_LOADING -> {
-                println("xxx TYPE_LOADING")
                 val inflatedView = parent.inflate(R.layout.item_recycler_loading, false)
                  LoadingViewHolder(inflatedView)
             }

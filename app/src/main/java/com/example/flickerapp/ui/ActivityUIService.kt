@@ -1,4 +1,4 @@
-package com.example.flickerapp
+package com.example.flickerapp.ui
 
 import android.content.Context
 import android.text.Editable
@@ -12,6 +12,7 @@ import com.example.flickerapp.databinding.ActivityMainBinding
 import com.example.flickerapp.model.PhotoResult
 import com.example.flickerapp.network.Result
 import com.example.flickerapp.paging.RecyclerViewPaginator
+import com.example.flickerapp.searchDebounce
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -56,7 +57,7 @@ class ActivityUIService(val context : Context, val lifecycleOwner: LifecycleOwne
     private fun bindRecyclerView() {
         recyclerAdapter = RecyclerViewAdapter()
         val layoutManager = LinearLayoutManager(context)
-        binding.recyclerView.layoutManager = layoutManager // GridLayoutManager(this, 2)
+        binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = recyclerAdapter
 
         binding.recyclerView.addOnScrollListener(object : RecyclerViewPaginator(layoutManager) {
@@ -89,10 +90,12 @@ class ActivityUIService(val context : Context, val lifecycleOwner: LifecycleOwne
 
     private fun handleResult(result : Result<PhotoResult>) {
         viewModel.setLoadingValue(false)
+        binding.progressHorizontal.visibility = View.GONE
         when(result) {
             is Result.Loading -> {
-                binding.loadingView.text = result.message
-                binding.loadingView.visibility = View.VISIBLE
+//                binding.loadingView.text = result.message
+//                binding.loadingView.visibility = View.VISIBLE
+                binding.progressHorizontal.visibility = View.VISIBLE
             }
             is Result.Error -> {
                 binding.loadingView.text = result.message

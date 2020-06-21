@@ -17,8 +17,6 @@ abstract class RecyclerViewPaginator(val layoutManager: LinearLayoutManager) :
         val totalItemCount: Int = layoutManager.itemCount
         val firstVisibleItemPosition: Int = layoutManager.findFirstVisibleItemPosition()
 
-        println("xxx visibleItemCount $visibleItemCount and totalItemCount $totalItemCount firstVisibleItemPosition $firstVisibleItemPosition")
-
         if (!isLoading && !isLastPage) {
             if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                 && firstVisibleItemPosition >= 0
